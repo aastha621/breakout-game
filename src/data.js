@@ -15,7 +15,7 @@ export default {
     colors: ["red", "brown"],
   },
   player: {
-    name: "Dhaval",
+    name: "Aastha",
     lives: 5,
     score: 0,
     level: 1,

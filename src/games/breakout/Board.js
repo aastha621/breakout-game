@@ -2,8 +2,11 @@ import React, {useRef, useEffect} from 'react';
 import { BallMovement } from './BallMovement';
 import Paddle from './Paddle';
 import Brick from './Brick';
+import PlayerStats from './PlayerStats';
 import BrickCollision from "./util/BrickCollision";
 import PaddleHit from "./util/PaddleHit";
+import AllBroken from "./util/AllBroken";
+import ResetBall from "./util/ResetBall";
 import WallCollision from "./util/WallCollision";
 import data from '../../data';
 
@@ -12,11 +15,13 @@ let bricks = [];
 export default function Board()
 {
 
+	// alert("Press ok to start game");
+
 	
 
 	const canvasRef= useRef(null);
 
-	let {ballObj, paddleProps, brickObj}= data;
+	let {ballObj, paddleProps, brickObj,player}= data;
 
 	useEffect(()=>{
 		
@@ -25,13 +30,13 @@ export default function Board()
 		const ctx = canvas.getContext('2d');
 
 			// Assign Bricks
-      let newBrickSet = Brick(2, bricks, canvas, brickObj);
+      let newBrickSet = Brick(player.level, bricks, canvas, brickObj);
 
        if (newBrickSet && newBrickSet.length > 0) {
         bricks = newBrickSet;
       }
-      
-paddleProps.y= canvas.height-30;
+
+		paddleProps.y= canvas.height-30;
 
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -43,11 +48,23 @@ paddleProps.y= canvas.height-30;
 
 
 
+		//Ball Movement
 		BallMovement(ctx, ballObj);
 
-		// WallCollision(ballObj, canvas);
 
-		if (ballObj.y - ballObj.rad <= 0 || ballObj.y + ballObj.rad >= canvas.height ) {
+      // Check all broken
+      AllBroken(bricks, player, canvas, ballObj);
+
+
+
+ 	//Wall collision
+ 	if( ballObj.y + ballObj.rad >= canvas.height ){
+ 		player.lives--;
+ 		ballObj.dy *= -1;
+
+
+ 	}
+ 	if (ballObj.y - ballObj.rad <= 0 ) {
     ballObj.dy *= -1;
   }
 
@@ -72,9 +89,19 @@ paddleProps.y= canvas.height-30;
             ballObj.dy *= -1;
             bricks[i].broke = true;
           }
-          // player.score += 10;
+          player.score += 10;
         }
       }
+
+      if(player.lives==0){
+      	alert("Game Over!! Press ok to restart");
+      	bricks.length=0;
+      	player.lives=5;
+      	ResetBall(ballObj, canvas, paddleProps);
+
+      }
+
+      PlayerStats(ctx,player,canvas);
 
 
 
@@ -102,7 +129,7 @@ render();
             (window.innerWidth < 900 ? 10 : (window.innerWidth * 20) / 200) -
             paddleProps.width / 2 -
             10)
-        } width="800" height="600" />;
+        } width="800" height="500" />;
 
 }
 		

@@ -13,17 +13,19 @@ import './App.css';
 function App() {
   return (
     <div className="App">
+
+    <Home />
+
+
     
 
     <Router>
       <div>
         <nav>
           <ul>
+            
             <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
+              <Link to="/about">Play</Link>
             </li>
             
           </ul>
@@ -36,9 +38,7 @@ function App() {
             <Breakout />
           </Route>
           
-          <Route path="/">
-            <Home />
-          </Route>
+          
         </Switch>
       </div>
     </Router>
@@ -48,7 +48,7 @@ function App() {
 }
 
 function Home() {
-  return <h2>Home</h2>;
+  return <h2>BREAKOUT GAME</h2>;
 }
 
 function About() {
