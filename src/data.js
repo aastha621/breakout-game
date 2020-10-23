@@ -12,7 +12,7 @@ export default {
     y: 50,
     height: 20,
     density: 2,
-    colors: ["red", "lightblue"],
+    colors: ["red", "brown"],
   },
   player: {
     name: "Dhaval",
