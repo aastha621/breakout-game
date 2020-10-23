@@ -3,6 +3,7 @@ import { BallMovement } from './BallMovement';
 import Paddle from './Paddle';
 import Brick from './Brick';
 import BrickCollision from "./util/BrickCollision";
+import PaddleHit from "./util/PaddleHit";
 import WallCollision from "./util/WallCollision";
 import data from '../../data';
 
@@ -10,6 +11,9 @@ import data from '../../data';
 let bricks = [];
 export default function Board()
 {
+
+	
+
 	const canvasRef= useRef(null);
 
 	let {ballObj, paddleProps, brickObj}= data;
@@ -26,7 +30,8 @@ export default function Board()
        if (newBrickSet && newBrickSet.length > 0) {
         bricks = newBrickSet;
       }
-
+      
+paddleProps.y= canvas.height-30;
 
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -71,7 +76,16 @@ export default function Board()
         }
       }
 
+
+
+
+
     Paddle(ctx, canvas, paddleProps);
+
+
+//Paddle Collision
+      PaddleHit(ballObj, paddleProps);
+
 
 	requestAnimationFrame(render);
 }
