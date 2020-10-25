@@ -98,7 +98,7 @@ export default function Board()
       }
 
       if(player.lives==0){
-      	alert("Game Over!! Press ok to restart");
+      	alert("You lost all lives!! Press ok to restart");
       	bricks.length=0;
       	player.lives=5;
       	brickObj.y = 50;
