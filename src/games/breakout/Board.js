@@ -16,12 +16,16 @@ export default function Board()
 {
 
 	// alert("Press ok to start game");
+	var name= prompt(" Enter name ");
+
 
 	
 
 	const canvasRef= useRef(null);
 
 	let {ballObj, paddleProps, brickObj,player}= data;
+
+	player.name= name;
 
 	useEffect(()=>{
 		
@@ -97,6 +101,7 @@ export default function Board()
       	alert("Game Over!! Press ok to restart");
       	bricks.length=0;
       	player.lives=5;
+      	brickObj.y = 50;
       	ResetBall(ballObj, canvas, paddleProps);
 
       }
